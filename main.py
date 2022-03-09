@@ -37,6 +37,7 @@ hero.width = 20
 hero.height = 20
 hero.dy = 0
 hero.dx = 0
+hero.can_fall = False
 hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
 
@@ -84,9 +85,12 @@ while True:
 			GRAVITY = 0
 			hero.dy = 0
 			hero.state = 'ready'
+			hero.can_fall = True
 
 
 	if hero.ycor() <= GROUND:
+		if hero.can_fall:
+			break
 		GRAVITY = 0
 		hero.dy = 0
 		hero.state = 'ready'
