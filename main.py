@@ -1,3 +1,5 @@
+# Эта самая новая версия
+
 import turtle
 import time
 
