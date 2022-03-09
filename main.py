@@ -24,7 +24,7 @@ window.title('Jump-Game')
 window.setup(height=320, width=800)
 window.tracer(0)
 
-GROUND = -100
+GROUND = -400
 GRAVITY = -0.3
 INERT = 0.5
 
@@ -41,8 +41,8 @@ hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
-y = -10
-for i in range(5):
+y = GROUND
+for i in range(12):
 	platform = turtle.Turtle()
 	platform.speed(0)
 	platform.color('orange')
@@ -54,7 +54,7 @@ for i in range(5):
 	platform.dy = 0
 	platform.dx = 0
 	platform.goto(random.randint(-300, 300), y)
-	y += random.randint(40, 100)
+	y += random.randint(70, 100)
 	platforms.append(platform)
 
 window.listen()
@@ -92,5 +92,13 @@ while True:
 		hero.state = 'ready'
 	else:
 		GRAVITY = -0.9
+
+	if hero.ycor() >= 400:
+		for platform in platforms:
+			if platform.ycor() <= GROUND:
+				platform.goto(random.randint(-300, 300), y)
+				y += random.randint(70, 100)
+			platform.sety(platform.ycor() - 5)
+
 	time.sleep(0.01)
 	window.update()
