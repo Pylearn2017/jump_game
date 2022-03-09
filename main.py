@@ -1,5 +1,6 @@
 import turtle
 import time
+import random
 
 def iscollision(obj1, obj2, w1, w2, h1, h2):
 	if obj1.xcor() + w1 > obj2.xcor() - w2 and obj1.xcor() - w1 < obj2.xcor() + w2:
@@ -39,17 +40,22 @@ hero.dx = 0
 hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
 
-platform = turtle.Turtle()
-platform.speed(0)
-platform.color('orange')
-platform.shape('square')
-platform.shapesize(1,8)
-platform.penup()
-platform.width = 60
-platform.height = 20
-platform.dy = 0
-platform.dx = 0
-platform.goto(0, -30)
+platforms = []
+y = -10
+for i in range(5):
+	platform = turtle.Turtle()
+	platform.speed(0)
+	platform.color('orange')
+	platform.shape('square')
+	platform.shapesize(1,8)
+	platform.penup()
+	platform.width = 60
+	platform.height = 20
+	platform.dy = 0
+	platform.dx = 0
+	platform.goto(random.randint(-300, 300), y)
+	y += random.randint(40, 100)
+	platforms.append(platform)
 
 window.listen()
 window.onkeypress(jump, 'space')
@@ -68,15 +74,17 @@ while True:
 	y = hero.ycor()
 	y += hero.dy
 	hero.sety(y)
-	if iscollision(hero, 
-					platform, 
-					hero.width, 
-					platform.width, 
-					hero.height, 
-					platform.height):
-		GRAVITY = 0
-		hero.dy = 0
-		hero.state = 'ready'
+	for platform in platforms:
+		if iscollision(hero, 
+						platform, 
+						hero.width, 
+						platform.width, 
+						hero.height, 
+						platform.height):
+			GRAVITY = 0
+			hero.dy = 0
+			hero.state = 'ready'
+
 
 	if hero.ycor() <= GROUND:
 		GRAVITY = 0
