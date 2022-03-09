@@ -1,7 +1,11 @@
-# Эта самая новая версия
-
 import turtle
 import time
+
+def iscollision(obj1, obj2, w1, w2, h1, h2):
+	if obj1.xcor() + w1 > obj2.xcor() - w2 and obj1.xcor() - w1 < obj2.xcor() + w2:
+		if obj1.ycor() + h1 > obj2.ycor() - h2 and obj1.ycor() - h1 < obj2.ycor() + h2:
+			return True
+	return False
 
 def jump():
 	if hero.state == 'ready':
@@ -34,6 +38,19 @@ hero.dy = 0
 hero.dx = 0
 hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
+
+platform = turtle.Turtle()
+platform.speed(0)
+platform.color('orange')
+platform.shape('square')
+platform.shapesize(1,8)
+platform.penup()
+platform.width = 60
+platform.height = 20
+platform.dy = 0
+platform.dx = 0
+platform.goto(0, -30)
+
 window.listen()
 window.onkeypress(jump, 'space')
 window.onkeypress(left, 'Left')
@@ -51,6 +68,15 @@ while True:
 	y = hero.ycor()
 	y += hero.dy
 	hero.sety(y)
+	if iscollision(hero, 
+					platform, 
+					hero.width, 
+					platform.width, 
+					hero.height, 
+					platform.height):
+		GRAVITY = 0
+		hero.dy = 0
+		hero.state = 'ready'
 
 	if hero.ycor() <= GROUND:
 		GRAVITY = 0
