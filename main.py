@@ -54,7 +54,7 @@ hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
 py = GROUND + 50
-for i in range(10):
+for i in range(15):
 	platform = turtle.Turtle()
 	platform.speed(0)
 	platform.color('orange')
@@ -67,6 +67,8 @@ for i in range(10):
 	platform.dx = 0
 	platform.score = 1
 	platform.status = random.choice(['strong', 'broken'])
+	if platform.status == 'broken':
+		platform.color('brown')
 	platform.goto(random.randint(-300, 300), py)
 	py += random.randint(120, 150)
 	platforms.append(platform)
@@ -113,7 +115,9 @@ while True:
 			hero.state = 'ready'
 			hero.lives = hero.lives - platform.score
 			if platform.status == 'broken':
-				pass
+				platform.score = 1
+				platform.goto(random.randint(-300, 300), py)
+				py += random.randint(50, 90)
 
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
