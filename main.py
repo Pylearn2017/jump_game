@@ -47,25 +47,26 @@ hero.width = 20
 hero.height = 20
 hero.dy = 0
 hero.dx = 0
-hero.can_fall = False
+hero.lives = 5
 hero.score = 0
 hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
 y = GROUND + 50
-for i in range(7):
+for i in range(10):
 	platform = turtle.Turtle()
 	platform.speed(0)
 	platform.color('orange')
 	platform.shape('square')
 	platform.shapesize(1,8)
-	platform.penup()
-	platform.width = 60
+	platform.penup()  
+	platform.width = 70
 	platform.height = 20
 	platform.dy = 0
 	platform.dx = 0
 	platform.score = 1
+	platform.status = random.choice(['strong', 'broken'])
 	platform.goto(random.randint(-300, 300), y)
 	y += random.randint(120, 150)
 	platforms.append(platform)
@@ -87,6 +88,7 @@ while True:
 	y = hero.ycor()
 	y += hero.dy
 	hero.sety(y)
+
 	for platform in platforms:
 		if iscollision(hero, 
 						platform, 
@@ -94,17 +96,20 @@ while True:
 						platform.width, 
 						hero.height, 
 						platform.height):
+			hero.dy = 0
+			GRAVITY = 0
 			hero.score += platform.score
 			show_score()
 			platform.score = 0
 			GRAVITY = 0
 			hero.dy = 0
 			hero.state = 'ready'
-			hero.can_fall = True
-
+			hero.lives = hero.lives - platform.score
+			if platform.status == 'broken':
+				pass
 
 	if hero.ycor() <= GROUND:
-		if hero.can_fall:
+		if hero.lives <= 0:
 			break  
 		GRAVITY = 0
 		hero.dy = 0
@@ -119,6 +124,7 @@ while True:
 				platform.goto(random.randint(-300, 300), y)
 				y += random.randint(70, 100)
 			platform.sety(platform.ycor() - 15)
+			hero.sety(hero.ycor() - 15)
 
 
 	time.sleep(0.01)
