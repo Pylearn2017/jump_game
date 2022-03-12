@@ -134,6 +134,8 @@ while True:
 			break  
 		GRAVITY = 0
 		hero.dy = 0
+		hero.score = 0
+		show_score()
 		hero.state = 'ready'
 
 	for platform in platforms:
@@ -141,8 +143,6 @@ while True:
 			platform.score = 1
 			platform.goto(random.randint(-300, 300), py)
 			py += random.randint(50, 90)
-		# platform.sety(platform.ycor() - 1)
-		# hero.sety(hero.ycor() - 1)
 		platform.dy = -1
 
 
