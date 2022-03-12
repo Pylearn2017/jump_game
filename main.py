@@ -14,7 +14,7 @@ def right():
 
 window = turtle.Screen()
 window.title('Jump-Game')
-window.setup(height=320, width=800)
+window.setup(width = 1.0, height = 1.0)
 window.tracer(0)
 
 GROUND = -100
