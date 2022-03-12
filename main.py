@@ -30,7 +30,7 @@ window.tracer(0)
 
 GROUND = -400
 GRAVITY = -0.3
-INERT = 0.5
+INERT = .9
 
 helper = turtle.Turtle()
 helper.speed(0)
@@ -54,7 +54,7 @@ hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
 py = GROUND + 50
-for i in range(15):
+for i in range(20):
 	platform = turtle.Turtle()
 	platform.speed(0)
 	platform.color('orange')
@@ -66,11 +66,8 @@ for i in range(15):
 	platform.dy = 0
 	platform.dx = 0
 	platform.score = 1
-	platform.status = random.choice(['strong', 'broken'])
-	if platform.status == 'broken':
-		platform.color('brown')
-	else:
-		platform.dx = random.choice([-1, 1])
+	platform.status = 'strong'
+	platform.dx = random.choice([-10, 10]) * .1
 	platform.goto(random.randint(-300, 300), py)
 	py += random.randint(120, 150)
 	platforms.append(platform)
@@ -127,7 +124,7 @@ while True:
 			if platform.status == 'broken':
 				platform.score = 1
 				platform.goto(random.randint(-300, 300), py)
-				py += random.randint(50, 80)
+				py += random.randint(-10, 10)
 
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
@@ -135,14 +132,16 @@ while True:
 		GRAVITY = 0
 		hero.dy = 0
 		hero.score = 0
-		show_score()
 		hero.state = 'ready'
 
 	for platform in platforms:
 		if platform.ycor() <= GROUND:
 			platform.score = 1
 			platform.goto(random.randint(-300, 300), py)
-			py += random.randint(50, 90)
+			platform.status = random.choice(['strong', 'broken'])
+			if platform.status == 'broken':
+				platform.color('red')
+			py += random.randint(-10, 10)
 		platform.dy = -1
 
 
