@@ -53,7 +53,7 @@ hero.state = 'ready'
 hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
-y = GROUND + 50
+py = GROUND + 50
 for i in range(10):
 	platform = turtle.Turtle()
 	platform.speed(0)
@@ -67,8 +67,8 @@ for i in range(10):
 	platform.dx = 0
 	platform.score = 1
 	platform.status = random.choice(['strong', 'broken'])
-	platform.goto(random.randint(-300, 300), y)
-	y += random.randint(120, 150)
+	platform.goto(random.randint(-300, 300), py)
+	py += random.randint(120, 150)
 	platforms.append(platform)
 
 window.listen()
@@ -89,6 +89,12 @@ while True:
 	y = hero.ycor()
 	y += hero.dy
 	hero.sety(y)
+	for platform in platforms:
+		platform.dy += GRAVITY
+		y = platform.ycor()
+		y += platform.dy
+		platform.sety(y)
+
 
 	GRAVITY = -.9
 
@@ -108,7 +114,7 @@ while True:
 			hero.lives = hero.lives - platform.score
 			if platform.status == 'broken':
 				pass
-				
+
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
 			break  
@@ -116,14 +122,14 @@ while True:
 		hero.dy = 0
 		hero.state = 'ready'
 
-	if hero.ycor() >= 400:
-		for platform in platforms:
-			if platform.ycor() <= GROUND:
-				platform.score = 1
-				platform.goto(random.randint(-300, 300), y)
-				y += random.randint(70, 100)
-			platform.sety(platform.ycor() - 15)
-			hero.sety(hero.ycor() - 15)
+	for platform in platforms:
+		if platform.ycor() <= GROUND:
+			platform.score = 1
+			platform.goto(random.randint(-300, 300), py)
+			py += random.randint(50, 90)
+		# platform.sety(platform.ycor() - 1)
+		# hero.sety(hero.ycor() - 1)
+		platform.dy = -1
 
 
 	time.sleep(0.01)
