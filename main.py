@@ -2,6 +2,13 @@ import turtle
 import time
 import random
 
+def click(x,y):
+	jump()
+	if x > 0:
+		right()
+	else: 
+		left()	
+
 def show_score():
 	helper.clear()
 	helper.write(f'Your score: {hero.score}')
@@ -67,12 +74,13 @@ for i in range(20):
 	platform.dx = 0
 	platform.score = 1
 	platform.status = 'strong'
-	platform.dx = random.choice([-10, 10]) * .1
+	platform.dx = random.randint(-10, 10) * .1
 	platform.goto(random.randint(-300, 300), py)
 	py += random.randint(120, 150)
 	platforms.append(platform)
 
 window.listen()
+window.onclick(click)
 window.onkeypress(jump, 'space')
 window.onkeypress(left, 'Left')
 window.onkeypress(right, 'Right')
