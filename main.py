@@ -84,11 +84,6 @@ while True:
 	x += hero.dx
 	hero.setx(x)
 
-	hero.dy += GRAVITY
-	y = hero.ycor()
-	y += hero.dy
-	hero.sety(y)
-
 	for platform in platforms:
 		if iscollision(hero, 
 						platform, 
@@ -108,16 +103,20 @@ while True:
 			if platform.status == 'broken':
 				pass
 
+	hero.dy += GRAVITY
+	GRAVITY = -.9
+	y = hero.ycor()
+	y += hero.dy
+	hero.sety(y)
+
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
 			break  
 		GRAVITY = 0
 		hero.dy = 0
 		hero.state = 'ready'
-	else:
-		GRAVITY = -0.9
 
-	if hero.ycor() >= 300:
+	if hero.ycor() >= 400:
 		for platform in platforms:
 			if platform.ycor() <= GROUND:
 				platform.score = 1
