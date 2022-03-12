@@ -69,6 +69,8 @@ for i in range(15):
 	platform.status = random.choice(['strong', 'broken'])
 	if platform.status == 'broken':
 		platform.color('brown')
+	else:
+		platform.dx = random.choice([-1, 1])
 	platform.goto(random.randint(-300, 300), py)
 	py += random.randint(120, 150)
 	platforms.append(platform)
@@ -92,10 +94,18 @@ while True:
 	y += hero.dy
 	hero.sety(y)
 	for platform in platforms:
+
 		platform.dy += GRAVITY
 		y = platform.ycor()
 		y += platform.dy
 		platform.sety(y)
+
+		if platform.status == 'strong':
+			if abs(platform.xcor()) > 300:
+				platform.dx *= -1
+			x = platform.xcor()
+			x += platform.dx
+			platform.setx(x)
 
 
 	GRAVITY = -.9
@@ -117,7 +127,7 @@ while True:
 			if platform.status == 'broken':
 				platform.score = 1
 				platform.goto(random.randint(-300, 300), py)
-				py += random.randint(50, 90)
+				py += random.randint(50, 80)
 
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
