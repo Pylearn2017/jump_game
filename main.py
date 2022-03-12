@@ -4,7 +4,7 @@ import random
 
 def click(x,y):
 	jump()
-	if x > 0:
+	if x > hero.xcor():
 		right()
 	else: 
 		left()	
@@ -21,14 +21,14 @@ def iscollision(obj1, obj2, w1, w2, h1, h2):
 
 def jump():
 	if hero.state == 'ready':
-		hero.dy = 15
+		hero.dy = 14
 		hero.state = 'jumping'
 
 def left():
-	hero.dx = -15
+	hero.dx = -14
 
 def right():
-	hero.dx = 15
+	hero.dx = 14
 
 window = turtle.Screen()
 window.title('Jump-Game')
@@ -93,7 +93,6 @@ while True:
 	x += hero.dx
 	hero.setx(x)
 
-
 	hero.dy += GRAVITY
 	y = hero.ycor()
 	y += hero.dy
@@ -111,7 +110,6 @@ while True:
 			x = platform.xcor()
 			x += platform.dx
 			platform.setx(x)
-
 
 	GRAVITY = -.9
 
@@ -132,7 +130,7 @@ while True:
 			if platform.status == 'broken':
 				platform.score = 1
 				platform.goto(random.randint(-300, 300), py)
-				py += random.randint(-10, 10)
+				py += random.randint(-10, 20)
 
 	if hero.ycor() <= GROUND:
 		if hero.lives <= 0:
@@ -149,10 +147,9 @@ while True:
 			platform.status = random.choice(['strong', 'broken'])
 			if platform.status == 'broken':
 				platform.color('red')
-			py += random.randint(-10, 10)
+			else:
+				platform.color('orange')
+			py += random.randint(-10, 20)
 		platform.dy = -1
-
-
 	time.sleep(0.01)
-
 	window.update()
