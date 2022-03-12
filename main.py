@@ -54,7 +54,7 @@ hero.goto(-200, GROUND + hero.height / 2)
 
 platforms = []
 y = GROUND + 50
-for i in range(12):
+for i in range(7):
 	platform = turtle.Turtle()
 	platform.speed(0)
 	platform.color('orange')
@@ -67,7 +67,7 @@ for i in range(12):
 	platform.dx = 0
 	platform.score = 1
 	platform.goto(random.randint(-300, 300), y)
-	y += random.randint(70, 100)
+	y += random.randint(120, 150)
 	platforms.append(platform)
 
 window.listen()
