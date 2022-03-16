@@ -33,6 +33,8 @@ def right():
 window = turtle.Screen()
 window.title('Jump-Game')
 window.setup(width = 1.0, height = 1.0)
+window.register_shape('platform.gif')
+window.register_shape('cloud.gif')
 window.tracer(0)
 
 GROUND = -400
@@ -64,8 +66,7 @@ py = GROUND + 50
 for i in range(20):
 	platform = turtle.Turtle()
 	platform.speed(0)
-	platform.color('orange')
-	platform.shape('square')
+	platform.shape('platform.gif')
 	platform.shapesize(1,8)
 	platform.penup()  
 	platform.width = 70
@@ -146,9 +147,9 @@ while True:
 			platform.goto(random.randint(-300, 300), py)
 			platform.status = random.choice(['strong', 'broken'])
 			if platform.status == 'broken':
-				platform.color('red')
+				platform.shape('cloud.gif')
 			else:
-				platform.color('orange')
+				platform.shape('platform.gif')
 			py += random.randint(-10, 20)
 		platform.dy = -1
 	time.sleep(0.01)
